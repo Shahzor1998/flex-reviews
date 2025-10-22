@@ -41,4 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 
+# local only
 .env
+*.db
+*.sqlite
+*.log
