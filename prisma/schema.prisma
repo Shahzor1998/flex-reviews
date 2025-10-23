@@ -1,0 +1,32 @@
+generator client {
+ provider = "prisma-client-js"
+}
+datasource db {
+ provider = "sqlite"
+ url = env("DATABASE_URL")
+}
+model Listing {
+ id Int @id @default(autoincrement())
+ slug String @unique
+ name String
+ channel String // e.g., "Hostaway"
+ reviews Review[]
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+}
+model Review {
+ id Int @id @default(autoincrement())
+ extId String @unique // external review id from provider
+ provider String // "hostaway" | "google"
+ type String // e.g., "guest-to-host" | "host-to-guest"
+ status String // published, pending, etc.
+ rating Float? // overall numeric rating if present
+ categories Json? // { cleanliness: 10, communication: 8, ... }
+ submittedAt DateTime
+ author String?
+ text String?
+ approved Boolean @default(false)
+ listing Listing @relation(fields: [listingId], references: [id])
+ listingId Int
+ createdAt DateTime @default(now())
+}

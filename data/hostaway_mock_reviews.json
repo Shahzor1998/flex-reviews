@@ -1,0 +1,81 @@
+{
+    "status": "success",
+    "result": [
+        {
+            "id": 7453,
+            "type": "host-to-guest",
+            "status": "published",
+            "rating": 9.8,
+            "publicReview": "Shane and family are wonderful! Would definitely host again :)",
+            "reviewCategory": [
+                {
+                    "category": "cleanliness",
+                    "rating": 10
+                },
+                {
+                    "category": "communication",
+                    "rating": 10
+                },
+                {
+                    "category": "respect_house_rules",
+                    "rating": 10
+                }
+            ],
+            "submittedAt": "2020-08-21 22:45:14",
+            "guestName": "Shane Finkelstein",
+            "listingName": "2B N1 A - 29 Shoreditch Heights"
+        },
+        {
+            "id": 8881,
+            "type": "guest-to-host",
+            "status": "published",
+            "rating": 7.2,
+            "publicReview": "Great location but AC was noisy.",
+            "reviewCategory": [
+                {
+                    "category": "cleanliness",
+                    "rating": 8
+                },
+                {
+                    "category": "communication",
+                    "rating": 9
+                },
+                {
+                    "category": "location",
+                    "rating": 10
+                },
+                {
+                    "category": "amenities",
+                    "rating": 6
+                }
+            ],
+            "submittedAt": "2021-03-02 07:11:14",
+            "guestName": "Emily R.",
+            "listingName": "2B N1 A - 29 Shoreditch Heights"
+        },
+        {
+            "id": 9012,
+            "type": "guest-to-host",
+            "status": "published",
+            "rating": 8.5,
+            "publicReview": "Spacious flat, check-in took a bit longer.",
+            "reviewCategory": [
+                {
+                    "category": "check_in",
+                    "rating": 7
+                },
+                {
+                    "category": "cleanliness",
+                    "rating": 8
+                },
+                {
+                    "category": "communication",
+                    "rating": 8
+                }
+            ],
+            "submittedAt": "2021-10-10 15:30:00",
+            "guestName": "Jon K.",
+            "listingName": "Old Street Loft — 12B"
+        }
+    ]
+}
