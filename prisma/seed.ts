@@ -2,11 +2,10 @@
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
+import { slugify } from "../lib/utils";
+
 const prisma = new PrismaClient();
-function slugify(name: string) {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g,
-        "");
-}
+
 async function main() {
     const mockPath = path.join(process.cwd(), "data",
         "hostaway_mock_reviews.json");
@@ -23,11 +22,15 @@ async function main() {
         byListing.set(r.listingName, arr);
     }
     for (const [listingName, reviews] of byListing) {
+        const slug = slugify(listingName);
         const listing = await prisma.listing.upsert({
-            where: { slug: slugify(listingName) },
-            update: {},
+            where: { slug },
+            update: {
+                name: listingName,
+                channel: "Hostaway",
+            },
             create: {
-                slug: slugify(listingName),
+                slug,
                 name: listingName,
                 channel: "Hostaway",
             },
@@ -39,7 +42,16 @@ async function main() {
             }, {});
             await prisma.review.upsert({
                 where: { extId: String(r.id) },
-                update: {},
+                update: {
+                    type: r.type ?? "",
+                    status: r.status ?? "",
+                    rating: r.rating ?? null,
+                    categories,
+                    submittedAt: new Date(r.submittedAt),
+                    author: r.guestName ?? null,
+                    text: r.publicReview ?? null,
+                    listingId: listing.id,
+                },
                 create: {
                     extId: String(r.id),
                     provider: "hostaway",
