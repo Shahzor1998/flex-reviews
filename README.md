@@ -113,3 +113,7 @@ Deliverables implemented:
 - Manager dashboard that surfaces trends and allows approval workflows
 - Property page showing only approved reviews in a Flex Living style
 - Documentation of Google Reviews feasibility and next steps
+
+## Documentation
+
+For the technical brief covering architecture, API behaviors, and Google Reviews findings, see `docs/BriefDocumentation.md` 
