@@ -122,8 +122,8 @@ export default async function PropertyPage({
   const googleMapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(meta?.location ?? "London, United Kingdom")}&z=12&output=embed`;
 
   return (
-    <main className="space-y-12 bg-[#FFF9E9] py-10">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 md:px-0">
+    <main className="bg-[#FFF9E9] py-10">
+      <div className="container mx-auto max-w-7xl space-y-12 px-3 md:px-4">
         <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-emerald-700">
           <Link className="hover:underline" href="/">
             Home
@@ -132,37 +132,58 @@ export default async function PropertyPage({
           <span className="text-slate-500">{listing.name}</span>
         </nav>
 
-        <section className="grid gap-4 lg:grid-cols-[3fr,2fr]">
-          <div className="relative overflow-hidden rounded-3xl border border-[#E9E3D7] bg-white shadow-sm">
-            <div
-              className="aspect-[5/3] w-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${primaryImage})` }}
-            />
-            <button className="absolute bottom-4 right-4 rounded-full bg-white px-4 py-2 text-xs font-semibold text-emerald-700 shadow-lg transition hover:bg-emerald-50">
-              View all photos
+        <section className="relative rounded-3xl border border-[#E9E3D7] bg-white shadow-sm">
+          {/* Mobile carousel */}
+          <div className="md:hidden">
+            <div className="overflow-hidden rounded-3xl">
+              <div className="flex snap-x snap-mandatory">
+                {[primaryImage, ...secondaryImages].map((image, index) => (
+                  <div
+                    key={`${image}-${index}`}
+                    className="min-w-full snap-center px-2"
+                  >
+                    <div className="relative w-full overflow-hidden rounded-3xl pb-[75%]">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{ backgroundImage: `url(${image})` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button className="absolute bottom-6 left-6 rounded-md bg-white/90 px-3 py-2 text-xs font-semibold text-emerald-700 shadow-lg backdrop-blur transition hover:bg-white">
+              View all
             </button>
+            <div className="absolute bottom-6 right-6 rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium text-white backdrop-blur">
+              1 / {secondaryImages.length + 1}
+            </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {secondaryImages.map((image, index) => (
+
+          {/* Desktop mosaic */}
+          <div className="hidden h-[560px] grid-cols-4 grid-rows-2 gap-3 p-3 md:grid">
+            <div className="relative col-span-2 row-span-2 overflow-hidden rounded-3xl">
+              <div
+                className="absolute inset-0 bg-cover bg-center transition duration-300 ease-out"
+                style={{ backgroundImage: `url(${primaryImage})` }}
+              />
+            </div>
+            {secondaryImages.slice(0, 4).map((image, index) => (
               <div
                 key={`${image}-${index}`}
-                className="aspect-[4/3] overflow-hidden rounded-2xl border border-[#E9E3D7] bg-white shadow-sm"
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}
-              />
+                className={`relative overflow-hidden rounded-2xl ${
+                  index === 1 ? "rounded-tr-3xl" : ""
+                }`}
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition duration-300 ease-out"
+                  style={{ backgroundImage: `url(${image})` }}
+                />
+              </div>
             ))}
-            {secondaryImages.length < 4 &&
-              Array.from({ length: Math.max(0, 4 - secondaryImages.length) }).map(
-                (_unused, index) => (
-                  <div
-                    key={`placeholder-${index}`}
-                    className="aspect-[4/3] overflow-hidden rounded-2xl border border-dashed border-[#E9E3D7] bg-white/70 shadow-inner"
-                  />
-                ),
-              )}
+            <button className="absolute bottom-8 right-8 flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-lg transition hover:bg-slate-100">
+              View all photos
+            </button>
           </div>
         </section>
 
